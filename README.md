@@ -1,2 +1,4 @@
 # ncc2025
-training with naver cloud camp 'security' project
+
+## 0_streamlit_translator
+https://ncc2025-streamtrans.streamlit.app/
