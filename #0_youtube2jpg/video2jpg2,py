@@ -1,0 +1,60 @@
+import cv2
+import os
+import tkinter as tk
+from tkinter import simpledialog, messagebox
+
+def get_filename():
+    root = tk.Tk()
+    root.withdraw()
+
+    filename = simpledialog.askstring("Video2image Converter", "Enter the filename:")
+    
+    if filename:
+        mp4tojpg(filename)
+    else:
+        messagebox.showwarning("Input required", "Please enter a valid filename!")
+
+def mp4tojpg(filepath):
+    if not os.path.exists(filepath):
+        messagebox.showwarning("File Not Found", f"Could not find file: {filepath}")
+        return
+
+    video = cv2.VideoCapture(filepath)
+
+    if not video.isOpened():
+        messagebox.showwarning("Error", f"Could not open: {filepath}")
+        return
+
+    length = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
+    width = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    fps = int(video.get(cv2.CAP_PROP_FPS))
+
+    if fps <= 0:
+        fps = 30  # 기본 FPS 설정
+
+    print(f"Video Info: Length={length}, Width={width}, Height={height}, FPS={fps}")
+
+    save_folder = filepath[:-4]  # 확장자 제거한 폴더명
+    os.makedirs(save_folder, exist_ok=True)  # 폴더 자동 생성
+
+    count = 0
+
+    while True:
+        ret, frame = video.read()
+        if not ret or frame is None:
+            break  # 더 이상 읽을 프레임이 없으면 종료
+
+        frame_id = int(video.get(cv2.CAP_PROP_POS_FRAMES))
+
+        if frame_id % fps == 0:  # 초당 1프레임 저장
+            filename = os.path.join(save_folder, f"frame{count}.jpg")
+            cv2.imwrite(filename, frame)
+            print(f"Saved: {filename}")
+            count += 1
+
+    video.release()
+    messagebox.showinfo("Completed", f"Video processing complete! {count} frames saved.")
+
+if __name__ == "__main__":
+    get_filename()

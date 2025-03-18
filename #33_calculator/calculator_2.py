@@ -2,7 +2,7 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
 
-ui_path=r"C:\2025ncc\2025ncc\#33_calculator\calculator.ui"
+ui_path=r"C:\2025ncc\ncc_python\#33_calculator\calculator.ui"
 form_class=uic.loadUiType(ui_path)[0]
 
 
