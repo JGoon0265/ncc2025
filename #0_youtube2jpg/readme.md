@@ -1,5 +1,5 @@
 bring URL
 
-download youtube.ui and .py
+clone this project and run .exe in /dist
 
-run video2jpg_Final.py to download video of YT or take picture of them
+you can now download video of YT or take picture of them
