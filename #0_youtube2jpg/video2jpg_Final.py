@@ -14,19 +14,7 @@ class VideoDownloader(QtWidgets.QWidget, Ui_Form):
         self.setupUi(self)
         self.pushButton.clicked.connect(self.process)
 
-    def process(self):
-        text_input = self.lineEdit.text().strip()
-        
-        if not text_input:
-            messagebox.showwarning("Input Required", "Please enter a valid URL or filename!")
-            return
-        
-        if self.radioButton.isChecked():  # 영상 다운로드 선택
-            self.youtube_downloader(text_input)
-        elif self.radioButton_2.isChecked():  # 프레임 캡처 선택
-            self.mp4tojpg(text_input)
-        else:
-            messagebox.showwarning("Selection Required", "Please select an option!")
+
 
     def youtube_downloader(self, url):
         try:
@@ -66,6 +54,21 @@ class VideoDownloader(QtWidgets.QWidget, Ui_Form):
         video.release()
         messagebox.showinfo("Completed", f"Frames extracted successfully! {count} frames saved.")
 
+    def process(self):
+        text_input = self.lineEdit.text().strip()
+        
+        if not text_input:
+            messagebox.showwarning("Input Required", "Please enter a valid URL or filename!")
+            return
+        
+        if self.radioButton.isChecked():  # 영상 다운로드 선택
+            self.youtube_downloader(text_input)
+        elif self.radioButton_2.isChecked():  # 프레임 캡처 선택
+            self.mp4tojpg(text_input)
+        else:
+            messagebox.showwarning("Selection Required", "Please select an option!")
+
+            
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     window = VideoDownloader()
